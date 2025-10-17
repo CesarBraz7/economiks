@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: economiks
+  profiles:
+    active: dev
+  jpa:
+    open-in-view: true
+server:
+  port: 8080

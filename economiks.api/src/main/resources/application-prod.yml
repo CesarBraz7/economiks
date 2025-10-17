@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${HOST:localhost}:${PORT:5432}/${DB}
+    driver-class-name: org.postgresql.Driver
+    username: {USERNAME}
+    password: {PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+logging:
+  level:
+    org.hibernate.SQL: warn
+    org.springframework: info
+    com.nextpagelabs.economiks.api: info
