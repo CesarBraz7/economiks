@@ -1,30 +1,58 @@
 package com.nextpagelabs.economiks.api.core.domain.entity;
 
 import com.nextpagelabs.economiks.api.core.domain.enums.Role;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.UUID;
-
-@Table(name = "USER")
-@Entity @Data
-@NoArgsConstructor @AllArgsConstructor
-@Getter @Setter
+@Table(name = "users")
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
 
-    @Column(length = 30,  nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 50)
     private String name;
 
-    @Column(length = 20,  nullable = false)
+    @Column(nullable = false, length = 20, unique = true)
     private String username;
 
-    @Column(length = 72,  nullable = false)
+    @Column(nullable = false)
     private String password;
 
-    @Column(length = 8,  nullable = false)
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 8)
     private Role role;
+
+    public static User create(
+            String name,
+            String username,
+            String password,
+            Role role,
+            PasswordEncoder passwordEncoder
+    ) {
+        String encryptedPassword = passwordEncoder.encode(password);
+
+        return new User(
+                null,
+                name,
+                username,
+                encryptedPassword,
+                role
+        );
+    }
 }
