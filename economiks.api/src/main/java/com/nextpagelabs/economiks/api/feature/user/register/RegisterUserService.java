@@ -2,6 +2,7 @@ package com.nextpagelabs.economiks.api.feature.user.register;
 
 import com.nextpagelabs.economiks.api.core.domain.entity.User;
 import com.nextpagelabs.economiks.api.core.domain.repository.UserRepository;
+import com.nextpagelabs.economiks.api.core.exception.ResourceAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,11 @@ public class RegisterUserService {
     @Transactional
     public RegisteredUserResponse register(RegisterUserRequest request) {
 
-        if (userRepository.findByUsername(request.username()).isPresent()) {
-            throw new IllegalArgumentException("Username is already in use");
-        }
+        userRepository.findByUsername(request.username()).ifPresent(user -> {
+            throw new ResourceAlreadyExistsException(
+                    "the username '%s' is already taken".formatted(request.username())
+            );
+        });
 
         User user = User.create(
                 request.name(),
