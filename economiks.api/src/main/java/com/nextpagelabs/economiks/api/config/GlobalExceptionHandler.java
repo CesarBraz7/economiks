@@ -86,7 +86,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponse> handleAccessDeniedException(
-            AccessDeniedException ex,
             HttpServletRequest request
     ) {
         ErrorResponse errorResponse = ErrorResponse.of(
@@ -102,7 +101,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorResponse> handleBadCredentialsException(
-            BadCredentialsException ex,
             HttpServletRequest request
     ) {
         ErrorResponse errorResponse = ErrorResponse.of(
