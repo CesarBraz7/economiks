@@ -8,3 +8,7 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
+jwt:
+  secret: ${JWT_SECRET:segredo-padrao-dev-fraco}
+  expiration:
+    ms: 86400000
