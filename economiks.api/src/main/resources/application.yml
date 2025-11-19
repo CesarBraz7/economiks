@@ -9,6 +9,6 @@ spring:
     enabled: true
     baseline-on-migrate: true
 jwt:
-  secret: ${JWT_SECRET:segredo-padrao-dev-fraco}
+  secret: ${JWT_SECRET:a7c497e86d99b86aaa6ef3658084fdbf}
   expiration:
     ms: 86400000
