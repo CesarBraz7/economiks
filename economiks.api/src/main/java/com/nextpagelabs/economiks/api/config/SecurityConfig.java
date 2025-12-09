@@ -58,11 +58,11 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/user").permitAll()
+                        .requestMatchers("/api/user").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
 
                         .requestMatchers("/api/products/**").hasAnyAuthority(Role.ADMIN.name(), Role.OWNER.name())
-                        .requestMatchers("/api/clients/**").hasAnyAuthority(Role.ADMIN.name(), Role.OWNER.name())
+                        .requestMatchers("/api/customers/**").hasAnyAuthority(Role.ADMIN.name(), Role.OWNER.name())
 
                         .requestMatchers("/api/sales/**").hasAnyAuthority(Role.ADMIN.name(), Role.OWNER.name(), Role.EMPLOYEE.name())
 

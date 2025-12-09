@@ -12,7 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/api/customers")
 @RequiredArgsConstructor
 public class RegisterCustomerController {
 
