@@ -52,11 +52,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthorizationFilter jwtAuthorizationFilter) throws Exception {
         http
+                .csrf(csrf -> csrf.disable())
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/user").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
 
                         .requestMatchers("/api/products/**").hasAnyAuthority(Role.ADMIN.name(), Role.OWNER.name())
@@ -68,7 +70,6 @@ public class SecurityConfig {
                 )
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        // Disable CSRF for H2 console
         http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
 
         return http.build();
