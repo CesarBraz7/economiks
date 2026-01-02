@@ -31,7 +31,7 @@ public class Expense {
 
     @Column(nullable = false, length = 50)
     private String category;
-    
+
     private String description;
 
     @Column(name = "created_at", nullable = false)
