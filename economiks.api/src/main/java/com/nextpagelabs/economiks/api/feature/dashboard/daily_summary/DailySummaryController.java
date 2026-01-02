@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/dashboard/daily-summary")
+@RequestMapping("/api/dashboard/daily-summary")
 @RequiredArgsConstructor
 public class DailySummaryController {
 
@@ -29,4 +29,3 @@ public class DailySummaryController {
         return ResponseEntity.ok(response);
     }
 }
-

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/expenses")
+@RequestMapping("/api/expenses")
 @RequiredArgsConstructor
 public class RegisterExpenseController {
 
@@ -24,4 +24,3 @@ public class RegisterExpenseController {
         return ResponseEntity.ok(response);
     }
 }
-

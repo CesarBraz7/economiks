@@ -66,12 +66,10 @@ public class SecurityConfig {
 
                         .requestMatchers("/api/sales/**").hasAnyAuthority(Role.ADMIN.name(), Role.OWNER.name(), Role.EMPLOYEE.name())
 
-                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
-
         return http.build();
     }
 }

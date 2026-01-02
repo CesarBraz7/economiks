@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/sale/{saleId}/receivables/payments")
+@RequestMapping("/api/sales/{saleId}/receivables/payments")
 @RequiredArgsConstructor
 public class RegisterReceivablePaymentController {
 
