@@ -8,9 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
+
+    List<Expense> findAllByExpenseDateBetweenOrderByExpenseDateDesc(LocalDateTime start, LocalDateTime end);
 
     @Query("""
             SELECT COALESCE(SUM(e.amount), 0)
@@ -21,4 +24,3 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     BigDecimal sumExpensesByDateBetween(@Param("start") LocalDateTime start,
                                         @Param("end") LocalDateTime end);
 }
-
