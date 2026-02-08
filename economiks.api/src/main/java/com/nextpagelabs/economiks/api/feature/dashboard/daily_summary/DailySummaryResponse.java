@@ -7,8 +7,8 @@ public record DailySummaryResponse(
         LocalDate date,
         BigDecimal totalCashSales,
         BigDecimal totalCreditReceivables,
+        BigDecimal totalReceivedFromCredit,
         BigDecimal totalExpenses,
         BigDecimal netBalance
 ) {
 }
-

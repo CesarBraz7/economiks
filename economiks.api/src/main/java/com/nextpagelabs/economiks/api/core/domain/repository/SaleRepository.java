@@ -18,14 +18,26 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
 
     @Query("""
             SELECT COALESCE(SUM(p.amount), 0)
-            FROM Sale s
-            JOIN s.payments p
+            FROM Payment p
+            JOIN p.sale s
             WHERE s.saleDate >= :start
               AND s.saleDate < :end
-              AND p.method IN ('CASH', 'PIX', 'CARD')
+              AND p.method <> 'CREDIT'
           """)
     BigDecimal sumCashPaymentsBySaleDateBetween(@Param("start") LocalDateTime start,
                                                 @Param("end") LocalDateTime end);
+
+    @Query("""
+            SELECT COALESCE(SUM(p.amount), 0)
+            FROM Payment p
+            JOIN p.sale s
+            WHERE p.paymentDate >= :start
+              AND p.paymentDate < :end
+              AND s.saleDate < :start
+              AND p.method <> 'CREDIT'
+          """)
+    BigDecimal sumReceivablePaymentsByPaymentDateBetween(@Param("start") LocalDateTime start,
+                                                         @Param("end") LocalDateTime end);
 
     @Query("""
             SELECT COALESCE(SUM(p.amount), 0)

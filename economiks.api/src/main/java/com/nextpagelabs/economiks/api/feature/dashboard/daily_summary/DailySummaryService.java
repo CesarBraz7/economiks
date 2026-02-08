@@ -20,20 +20,29 @@ public class DailySummaryService {
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.plusDays(1).atStartOfDay();
 
+        // vendas à vista (vendas do dia pagas com dinherio/pix/cartão)
+        // inclui entradas de vendas a prazo feitas no dia
         BigDecimal totalCashSales = saleRepository.sumCashPaymentsBySaleDateBetween(startOfDay, endOfDay);
-        BigDecimal totalCreditReceivables = saleRepository.sumPendingCreditBySaleDateBetween(startOfDay, endOfDay);
-        BigDecimal totalReceivedCredit = saleRepository.sumReceivedCreditBySaleDateBetween(startOfDay, endOfDay);
 
+        // recebimentos de fiado (pagamentos hoje referentes a vendas passadas)
+        BigDecimal totalReceivedFromCredit = saleRepository.sumReceivablePaymentsByPaymentDateBetween(startOfDay, endOfDay);
+
+        // fiado pendente (vendas a prazo pendentes criadas hoje)
+        BigDecimal totalCreditPending = saleRepository.sumPendingCreditBySaleDateBetween(startOfDay, endOfDay);
+
+        // despesas do dia
         BigDecimal totalExpenses = expenseRepository.sumExpensesByDateBetween(startOfDay, endOfDay);
 
+        // calculo do liquido: (vendas à vista + recebido de antigas) - despesas
         BigDecimal netBalance = totalCashSales
-                .add(totalReceivedCredit)
+                .add(totalReceivedFromCredit)
                 .subtract(totalExpenses);
 
         return new DailySummaryResponse(
                 date,
                 totalCashSales,
-                totalCreditReceivables,
+                totalCreditPending,
+                totalReceivedFromCredit,
                 totalExpenses,
                 netBalance
         );
