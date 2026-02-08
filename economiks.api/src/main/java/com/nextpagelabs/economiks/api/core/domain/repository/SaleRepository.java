@@ -50,16 +50,4 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
           """)
     BigDecimal sumPendingCreditBySaleDateBetween(@Param("start") LocalDateTime start,
                                                  @Param("end") LocalDateTime end);
-
-    @Query("""
-            SELECT COALESCE(SUM(p.amount), 0)
-            FROM Sale s
-            JOIN s.payments p
-            WHERE s.saleDate >= :start
-              AND s.saleDate < :end
-              AND p.method = 'CREDIT'
-              AND s.status = 'PAID'
-          """)
-    BigDecimal sumReceivedCreditBySaleDateBetween(@Param("start") LocalDateTime start,
-                                                  @Param("end") LocalDateTime end);
 }
